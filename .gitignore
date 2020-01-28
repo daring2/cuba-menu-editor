@@ -1,0 +1,13 @@
+.gradle
+.idea
+.studio
+
+build/
+classes/
+out/
+target/
+
+/deploy/tomcat/
+/deploy/hsqldb/
+/log/
+/tmp/
