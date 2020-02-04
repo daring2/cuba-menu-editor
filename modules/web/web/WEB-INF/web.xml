@@ -8,7 +8,7 @@
     <context-param>
         <param-name>appPropertiesConfig</param-name>
         <param-value>
-            classpath:ru/itsyn/cuba/menueditor/web-app.properties
+            classpath:ru/itsyn/cuba/menu_editor/web-app.properties
             /WEB-INF/local.app.properties
             "file:${catalina.base}/conf/app/local.app.properties"
         </param-value>

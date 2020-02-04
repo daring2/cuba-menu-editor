@@ -21,7 +21,7 @@ apply(plugin: 'cuba')
 
 cuba {
     artifact {
-        group = 'ru.itsyn.cuba.menueditor'
+        group = 'ru.itsyn.cuba.menu_editor'
         version = '0.1'
         isSnapshot = true
     }
@@ -139,7 +139,7 @@ configure(webModule) {
 
     task deployConf(type: Copy) {
         from file('src')
-        include "ru/itsyn/cuba/menueditor/**"
+        include "ru/itsyn/cuba/menu_editor/**"
         into "$cuba.tomcat.dir/conf/${modulePrefix}"
     }
 
