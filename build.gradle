@@ -41,6 +41,9 @@ configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'maven')
     apply(plugin: 'cuba')
 
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+
     dependencies {
         testCompile('junit:junit:4.12')
     }

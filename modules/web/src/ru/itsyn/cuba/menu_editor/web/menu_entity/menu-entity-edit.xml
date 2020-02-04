@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd" caption="msg://editorCaption" focusComponent="form"
-        messagesPack="ru.itsyn.cuba.menu_editor.web.screens.menu_entity">
+        messagesPack="ru.itsyn.cuba.menu_editor.web.menu_entity">
     <data>
         <instance id="menuEntityDc" class="ru.itsyn.cuba.menu_editor.entity.MenuEntity" view="_local">
             <loader/>
