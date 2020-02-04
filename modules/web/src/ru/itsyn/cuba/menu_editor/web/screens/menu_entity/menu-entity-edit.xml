@@ -7,20 +7,29 @@
         </instance>
     </data>
     <dialogMode height="768" width="1024"/>
-    <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="menuEntityDc" width="100%">
-            <column width="100%">
-                <textField id="nameField" property="name"/>
-            </column>
-            <column width="100%">
-                <textField id="codeField" property="code"/>
-            </column>
-        </form>
-        <textArea id="descriptionField" property="description" rows="3" width="100%"/>
-        <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose"/>
-            <button action="windowCommit"/>
-            <button action="windowClose"/>
-        </hbox>
+    <layout expand="split" spacing="true">
+        <split id="split" orientation="horizontal" pos="50">
+            <vbox expand="editActions" height="100%" width="100%" margin="true" spacing="true">
+                <form id="form" dataContainer="menuEntityDc" width="100%">
+                    <column width="100%">
+                        <textField id="nameField" property="name"/>
+                    </column>
+                    <column width="100%">
+                        <textField id="codeField" property="code"/>
+                    </column>
+                </form>
+                <textArea dataContainer="menuEntityDc" property="description" width="100%" rows="3"
+                          caption="msg://ru.itsyn.cuba.menu_editor.entity/MenuEntity.description"/>
+                <hbox id="editActions" spacing="true">
+                    <button action="windowCommitAndClose"/>
+                    <button action="windowCommit"/>
+                    <button action="windowClose"/>
+                </hbox>
+            </vbox>
+            <vbox expand="configField" height="100%" width="100%" margin="true" spacing="true">
+                <textArea id="configField" dataContainer="menuEntityDc" property="config" width="100%"
+                          caption="msg://ru.itsyn.cuba.menu_editor.entity/MenuEntity.config"/>
+            </vbox>
+        </split>
     </layout>
 </window>
