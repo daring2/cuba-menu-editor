@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd" caption="msg://editorCaption" focusComponent="form"
+        messagesPack="ru.itsyn.cuba.menu_editor.web.screens.menu_entity">
+    <data>
+        <instance id="menuEntityDc" class="ru.itsyn.cuba.menu_editor.entity.MenuEntity" view="_local">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="768" width="1024"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="menuEntityDc" width="100%">
+            <column width="100%">
+                <textField id="nameField" property="name"/>
+            </column>
+            <column width="100%">
+                <textField id="codeField" property="code"/>
+            </column>
+        </form>
+        <textArea id="descriptionField" property="description" rows="3" width="100%"/>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowCommit"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

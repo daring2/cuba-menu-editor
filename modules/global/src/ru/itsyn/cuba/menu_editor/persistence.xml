@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
     <persistence-unit name="cuba-menu-editor" transaction-type="RESOURCE_LOCAL">
+        <class>ru.itsyn.cuba.menu_editor.entity.MenuEntity</class>
     </persistence-unit>
 </persistence>

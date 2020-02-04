@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd" caption="msg://browseCaption" focusComponent="table"
+        messagesPack="ru.itsyn.cuba.menu_editor.web.screens.menu_entity">
+    <data readOnly="true">
+        <collection id="tableDc" class="ru.itsyn.cuba.menu_editor.entity.MenuEntity" view="_local">
+            <loader id="tableDl">
+                <query>select e from menu_MenuEntity e order by e.name</query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="768" width="1024"/>
+    <layout expand="table" spacing="true">
+        <filter id="filter" applyTo="table" dataLoader="tableDl">
+            <properties include=".*"/>
+        </filter>
+        <table id="table" width="100%" dataContainer="tableDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="code"/>
+                <column id="description" collapsed="true"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel" alwaysVisible="true">
+                <button id="createBtn" action="table.create"/>
+                <button id="editBtn" action="table.edit"/>
+                <button id="removeBtn" action="table.remove"/>
+            </buttonsPanel>
+        </table>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
