@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-@NamePattern("%s|description")
+@NamePattern("%s|caption")
 @MetaClass(name = "menu_MenuItemEntity")
 public class MenuItemEntity extends BaseStringIdEntity {
     private static final long serialVersionUID = -6335439802277376563L;

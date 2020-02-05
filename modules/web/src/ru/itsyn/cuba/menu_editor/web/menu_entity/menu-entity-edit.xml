@@ -2,15 +2,18 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd" caption="msg://editorCaption" focusComponent="form"
         messagesPack="ru.itsyn.cuba.menu_editor.web.menu_entity">
     <data>
-        <instance id="menuEntityDc" class="ru.itsyn.cuba.menu_editor.entity.MenuEntity" view="_local">
+        <instance id="editDc" class="ru.itsyn.cuba.menu_editor.entity.MenuEntity" view="_local">
             <loader/>
         </instance>
+        <collection id="menuDc" class="ru.itsyn.cuba.menu_editor.entity.MenuItemEntity">
+            <loader id="menuDl"/>
+        </collection>
     </data>
     <dialogMode height="768" width="1024"/>
     <layout expand="split" spacing="true">
         <split id="split" orientation="horizontal" pos="50">
             <vbox expand="editActions" height="100%" width="100%" margin="true" spacing="true">
-                <form id="form" dataContainer="menuEntityDc" width="100%">
+                <form id="form" dataContainer="editDc" width="100%">
                     <column width="100%">
                         <textField id="nameField" property="name"/>
                     </column>
@@ -18,7 +21,7 @@
                         <textField id="codeField" property="code"/>
                     </column>
                 </form>
-                <textArea dataContainer="menuEntityDc" property="description" width="100%" rows="3"
+                <textArea dataContainer="editDc" property="description" width="100%" rows="3"
                           caption="msg://ru.itsyn.cuba.menu_editor.entity/MenuEntity.description"/>
                 <hbox id="editActions" spacing="true">
                     <button action="windowCommitAndClose"/>
@@ -26,9 +29,13 @@
                     <button action="windowClose"/>
                 </hbox>
             </vbox>
-            <vbox expand="configField" height="100%" width="100%" margin="true" spacing="true">
-                <textArea id="configField" dataContainer="menuEntityDc" property="config" width="100%"
-                          caption="msg://ru.itsyn.cuba.menu_editor.entity/MenuEntity.config"/>
+            <vbox expand="menuTable" height="100%" width="100%" margin="true" spacing="true">
+                <treeTable id="menuTable" dataContainer="menuDc" hierarchyProperty="parent" width="100%">
+                    <columns>
+                        <column id="caption"/>
+                        <column id="screen"/>
+                    </columns>
+                </treeTable>
             </vbox>
         </split>
     </layout>
