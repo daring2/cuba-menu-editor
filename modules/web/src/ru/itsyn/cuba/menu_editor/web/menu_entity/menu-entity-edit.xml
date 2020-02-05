@@ -31,10 +31,16 @@
             </vbox>
             <vbox expand="menuTable" height="100%" width="100%" margin="true" spacing="true">
                 <treeTable id="menuTable" dataContainer="menuDc" hierarchyProperty="parent" width="100%">
+                    <actions>
+                        <action id="edit" type="edit"/>
+                    </actions>
                     <columns>
                         <column id="caption"/>
                         <column id="screen"/>
                     </columns>
+                    <buttonsPanel alwaysVisible="true">
+                        <button action="menuTable.edit"/>
+                    </buttonsPanel>
                 </treeTable>
             </vbox>
         </split>

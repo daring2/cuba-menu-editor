@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd" caption="msg://editorCaption" focusComponent="form"
+        messagesPack="ru.itsyn.cuba.menu_editor.web.menu_item_entity">
+    <data>
+        <instance id="editDc" class="ru.itsyn.cuba.menu_editor.entity.MenuItemEntity" view="_local">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="420" width="800" resizable="true"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="editDc" width="100%" editable="false">
+            <column width="100%">
+                <textField id="idField" property="id"/>
+                <textField id="parentField" property="parent" editable="false"/>
+                <textField id="screenField" property="screen"/>
+                <textField id="beanField" property="bean"/>
+                <lookupField id="openTypeField" property="openType"/>
+                <checkBox id="resizableField" property="resizable"/>
+                <textField id="styleNameField" property="styleName"/>
+                <textField id="descriptionField" property="description"/>
+            </column>
+            <column width="100%">
+                <lookupField id="itemTypeField" property="itemType"/>
+                <textField id="captionField" property="caption"/>
+                <textField id="runnableClassField" property="runnableClass"/>
+                <textField id="beanMethodField" property="beanMethod"/>
+                <textField id="shortcutField" property="shortcut"/>
+                <checkBox id="expandedField" property="expanded"/>
+                <textField id="iconField" property="icon"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true" align="TOP_CENTER">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>
