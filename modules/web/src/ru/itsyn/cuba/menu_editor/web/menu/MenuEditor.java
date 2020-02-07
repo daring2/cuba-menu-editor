@@ -7,6 +7,7 @@ import com.haulmont.cuba.gui.components.TreeTable;
 import com.haulmont.cuba.gui.screen.*;
 import ru.itsyn.cuba.menu_editor.entity.MenuEntity;
 import ru.itsyn.cuba.menu_editor.entity.MenuItemEntity;
+import ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemLoader;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
