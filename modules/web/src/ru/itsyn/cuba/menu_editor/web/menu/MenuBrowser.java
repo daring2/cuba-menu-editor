@@ -1,11 +1,11 @@
-package ru.itsyn.cuba.menu_editor.web.menu_entity;
+package ru.itsyn.cuba.menu_editor.web.menu;
 
 import com.haulmont.cuba.gui.screen.*;
 import ru.itsyn.cuba.menu_editor.entity.MenuEntity;
 
 @UiController("menu_MenuEntity.browse")
-@UiDescriptor("menu-entity-browse.xml")
+@UiDescriptor("menu-browse.xml")
 @LookupComponent("table")
 @LoadDataBeforeShow
-public class MenuEntityBrowser extends StandardLookup<MenuEntity> {
+public class MenuBrowser extends StandardLookup<MenuEntity> {
 }

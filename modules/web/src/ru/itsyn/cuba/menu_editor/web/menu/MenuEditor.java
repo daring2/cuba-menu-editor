@@ -1,4 +1,4 @@
-package ru.itsyn.cuba.menu_editor.web.menu_entity;
+package ru.itsyn.cuba.menu_editor.web.menu;
 
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.gui.ScreenBuilders;
@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @UiController("menu_MenuEntity.edit")
-@UiDescriptor("menu-entity-edit.xml")
+@UiDescriptor("menu-edit.xml")
 @EditedEntityContainer("editDc")
 @LoadDataBeforeShow
-public class MenuEntityEditor extends StandardEditor<MenuEntity> {
+public class MenuEditor extends StandardEditor<MenuEntity> {
 
     @Inject
     ScreenBuilders screenBuilders;

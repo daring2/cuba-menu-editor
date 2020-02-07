@@ -1,4 +1,4 @@
-package ru.itsyn.cuba.menu_editor.web.menu_entity;
+package ru.itsyn.cuba.menu_editor.web.menu;
 
 import com.haulmont.bali.util.Dom4j;
 import com.haulmont.cuba.core.global.Messages;
