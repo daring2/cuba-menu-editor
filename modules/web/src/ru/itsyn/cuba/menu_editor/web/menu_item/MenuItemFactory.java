@@ -15,7 +15,7 @@ import static java.lang.Boolean.parseBoolean;
 @Component("menu_MenuItemFactory")
 public class MenuItemFactory {
 
-    static String messagePack = MenuItemEntity.class.getPackageName();
+    static String messagePack = MenuItemFactory.class.getPackageName();
 
     @Inject
     Messages messages;
