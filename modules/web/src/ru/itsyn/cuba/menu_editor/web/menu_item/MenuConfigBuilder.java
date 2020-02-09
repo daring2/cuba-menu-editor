@@ -10,7 +10,6 @@ import ru.itsyn.cuba.menu_editor.entity.MenuItemEntity;
 import ru.itsyn.cuba.menu_editor.entity.MenuItemType;
 
 import javax.annotation.concurrent.NotThreadSafe;
-import java.util.HashMap;
 import java.util.List;
 
 import static org.apache.commons.lang3.BooleanUtils.isTrue;
@@ -71,21 +70,6 @@ public class MenuConfigBuilder {
         if (value instanceof EnumClass<?>)
             value = ((EnumClass<?>) value).getId();
         e.addAttribute(name, value.toString());
-    }
-
-    public void rebuildItems(List<MenuItemEntity> items) {
-        //TODO refactor
-        var itemMap = new HashMap<String, MenuItemEntity>();
-        for (var item : items) {
-            itemMap.put(item.getId(), item);
-            item.getChildren().clear();
-            var parent = item.getParent();
-            if (parent != null) {
-                parent = itemMap.get(parent.getId());
-                item.setParent(parent);
-                parent.getChildren().add(item);
-            }
-        }
     }
 
 }

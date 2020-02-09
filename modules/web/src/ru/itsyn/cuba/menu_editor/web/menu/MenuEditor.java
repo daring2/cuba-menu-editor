@@ -7,6 +7,7 @@ import com.haulmont.cuba.gui.components.Action;
 import com.haulmont.cuba.gui.components.TreeTable;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
+import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.screen.*;
 import ru.itsyn.cuba.menu_editor.entity.MenuEntity;
 import ru.itsyn.cuba.menu_editor.entity.MenuItemEntity;
@@ -30,6 +31,8 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
     @Inject
     MenuConfigBuilder menuConfigBuilder;
     @Inject
+    DataContext dataContext;
+    @Inject
     CollectionContainer<MenuItemEntity> itemsDc;
     @Inject
     CollectionLoader<MenuItemEntity> itemsDl;
@@ -48,6 +51,7 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
     void onItemEdit(Action.ActionPerformedEvent event) {
         screenBuilders.editor(itemsTable)
                 .withOpenMode(OpenMode.DIALOG)
+                .withParentDataContext(dataContext)
                 .show();
     }
 
@@ -55,12 +59,10 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
     void onBeforeCommitChanges(BeforeCommitChangesEvent event) {
         var items = itemsDc.getItems();
         if (items.isEmpty()) return;
-        menuConfigBuilder.rebuildItems(items); //TODO refactor
         var rootItem = items.get(0);
         var doc = menuConfigBuilder.buildMenuConfig(rootItem.getChildren());
         var config = Dom4j.writeDocument(doc, true);
         getEditedEntity().setConfig(config);
-        itemsDl.load();
     }
 
 }
