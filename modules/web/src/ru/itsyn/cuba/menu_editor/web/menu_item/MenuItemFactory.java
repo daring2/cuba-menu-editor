@@ -48,12 +48,12 @@ public class MenuItemFactory {
             e.setRunnableClass(item.getRunnableClass());
             e.setBean(item.getBean());
             e.setBeanMethod(item.getBeanMethod());
-        }
-        var d = item.getDescriptor();
-        if (d != null) {
-            e.setOpenType(MenuOpenType.fromId(d.attributeValue("openType")));
-            e.setResizable(parseBoolean(d.attributeValue("resizable")));
-            e.setShortcut(d.attributeValue("shortcut"));
+            var d = item.getDescriptor();
+            if (d != null) {
+                e.setOpenType(MenuOpenType.fromId(d.attributeValue("openType")));
+                e.setResizable(parseBoolean(d.attributeValue("resizable")));
+                e.setShortcut(d.attributeValue("shortcut"));
+            }
         }
         return e;
     }

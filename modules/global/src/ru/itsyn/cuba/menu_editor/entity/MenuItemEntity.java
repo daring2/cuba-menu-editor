@@ -65,6 +65,8 @@ public class MenuItemEntity extends BaseStringIdEntity {
     @MetaProperty
     protected List<MenuItemEntity> children = new ArrayList<>();
 
+    //TODO add attributes params, permissions, screenProperties
+
     public String getCaption() {
         return caption;
     }
@@ -72,8 +74,6 @@ public class MenuItemEntity extends BaseStringIdEntity {
     public void setCaption(String caption) {
         this.caption = caption;
     }
-
-    //TODO add attributes params, permissions, screenProperties
 
     public List<MenuItemEntity> getChildren() {
         return children;
