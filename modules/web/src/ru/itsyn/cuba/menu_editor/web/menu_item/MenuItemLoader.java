@@ -28,7 +28,6 @@ public class MenuItemLoader {
     MenuItemFactory menuItemFactory;
 
     ConfigLoader configLoader = new ConfigLoader();
-    int itemIds = 1;
 
     @PostConstruct
     public void init() {

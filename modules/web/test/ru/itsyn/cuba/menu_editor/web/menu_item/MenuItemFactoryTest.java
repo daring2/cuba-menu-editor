@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemFactory.messagePack;
+import static ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemFactory.MESSAGE_PACK;
 
 public class MenuItemFactoryTest {
 
@@ -29,7 +29,7 @@ public class MenuItemFactoryTest {
     @Test
     public void testCreateRootItem() {
         var f = factory;
-        when(f.messages.getMessage(messagePack, "rootItemCaption"))
+        when(f.messages.getMessage(MESSAGE_PACK, "rootItemCaption"))
                 .thenReturn("root caption");
         var ri = f.createRootItem();
         assertEquals("root", ri.getId());
