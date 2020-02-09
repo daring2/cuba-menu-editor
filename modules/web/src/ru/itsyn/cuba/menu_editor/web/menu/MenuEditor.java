@@ -1,12 +1,16 @@
 package ru.itsyn.cuba.menu_editor.web.menu;
 
+import com.haulmont.bali.util.Dom4j;
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.components.Action;
 import com.haulmont.cuba.gui.components.TreeTable;
+import com.haulmont.cuba.gui.model.CollectionContainer;
+import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import ru.itsyn.cuba.menu_editor.entity.MenuEntity;
 import ru.itsyn.cuba.menu_editor.entity.MenuItemEntity;
+import ru.itsyn.cuba.menu_editor.web.menu_item.MenuConfigBuilder;
 import ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemLoader;
 
 import javax.inject.Inject;
@@ -24,21 +28,39 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
     @Inject
     MenuItemLoader menuItemLoader;
     @Inject
-    TreeTable<MenuItemEntity> menuTable;
+    MenuConfigBuilder menuConfigBuilder;
+    @Inject
+    CollectionContainer<MenuItemEntity> itemsDc;
+    @Inject
+    CollectionLoader<MenuItemEntity> itemsDl;
+    @Inject
+    TreeTable<MenuItemEntity> itemsTable;
 
-    @Install(to = "menuDl", target = Target.DATA_LOADER)
-    private List<MenuItemEntity> loadMenu(LoadContext<MenuItemEntity> lc) {
+    @Install(to = "itemsDl", target = Target.DATA_LOADER)
+    private List<MenuItemEntity> loadMenuItems(LoadContext<MenuItemEntity> lc) {
         var items = new ArrayList<MenuItemEntity>();
         var rootItem = menuItemLoader.loadMenu(getEditedEntity());
         rootItem.visitItems(items::add);
         return items;
     }
 
-    @Subscribe("menuTable.edit")
-    public void onItemEdit(Action.ActionPerformedEvent event) {
-        screenBuilders.editor(menuTable)
+    @Subscribe("itemsTable.edit")
+    void onItemEdit(Action.ActionPerformedEvent event) {
+        screenBuilders.editor(itemsTable)
                 .withOpenMode(OpenMode.DIALOG)
                 .show();
+    }
+
+    @Subscribe
+    void onBeforeCommitChanges(BeforeCommitChangesEvent event) {
+        var items = itemsDc.getItems();
+        if (items.isEmpty()) return;
+        menuConfigBuilder.rebuildItems(items); //TODO refactor
+        var rootItem = items.get(0);
+        var doc = menuConfigBuilder.buildMenuConfig(rootItem.getChildren());
+        var config = Dom4j.writeDocument(doc, true);
+        getEditedEntity().setConfig(config);
+        itemsDl.load();
     }
 
 }

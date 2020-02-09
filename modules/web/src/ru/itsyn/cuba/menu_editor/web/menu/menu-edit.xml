@@ -5,8 +5,8 @@
         <instance id="editDc" class="ru.itsyn.cuba.menu_editor.entity.MenuEntity" view="_local">
             <loader/>
         </instance>
-        <collection id="menuDc" class="ru.itsyn.cuba.menu_editor.entity.MenuItemEntity">
-            <loader id="menuDl"/>
+        <collection id="itemsDc" class="ru.itsyn.cuba.menu_editor.entity.MenuItemEntity">
+            <loader id="itemsDl"/>
         </collection>
     </data>
     <dialogMode height="768" width="1024"/>
@@ -29,8 +29,8 @@
                     <button action="windowClose"/>
                 </hbox>
             </vbox>
-            <vbox expand="menuTable" height="100%" width="100%" margin="true" spacing="true">
-                <treeTable id="menuTable" dataContainer="menuDc" hierarchyProperty="parent" width="100%">
+            <vbox expand="itemsTable" height="100%" width="100%" margin="true" spacing="true">
+                <treeTable id="itemsTable" dataContainer="itemsDc" hierarchyProperty="parent" width="100%">
                     <actions>
                         <action id="edit" type="edit"/>
                     </actions>
@@ -39,7 +39,7 @@
                         <column id="screen"/>
                     </columns>
                     <buttonsPanel alwaysVisible="true">
-                        <button action="menuTable.edit"/>
+                        <button action="itemsTable.edit"/>
                     </buttonsPanel>
                 </treeTable>
             </vbox>
