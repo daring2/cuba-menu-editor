@@ -197,6 +197,24 @@ public class MenuItemEntity extends BaseStringIdEntity {
         this.id = id;
     }
 
+    public boolean isMenu() {
+        return getItemType() == MenuItemType.MENU;
+    }
+
+    public int getChildIndex(MenuItemEntity item) {
+        return children.indexOf(item);
+    }
+
+    public void addChildItem(MenuItemEntity item, int index) {
+        var pi = item.getParent();
+        if (pi != null)
+            pi.getChildren().remove(item);
+        item.setParent(this);
+        if (index == -1)
+            index = children.size();
+        children.add(index, item);
+    }
+
     public void visitItems(Consumer<MenuItemEntity> consumer) {
         consumer.accept(this);
         children.forEach(i -> i.visitItems(consumer));
