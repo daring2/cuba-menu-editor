@@ -15,14 +15,15 @@ import static java.lang.Boolean.parseBoolean;
 @Component("menu_MenuItemFactory")
 public class MenuItemFactory {
 
-    static final String MESSAGE_PACK = MenuItemFactory.class.getPackageName();
+    public static final String ROOT_ITEM_ID = "rootItem";
+    public static final String MESSAGE_PACK = MenuItemFactory.class.getPackageName();
 
     @Inject
     Messages messages;
 
     public MenuItemEntity createRootItem() {
         var re = new MenuItemEntity();
-        re.setId("rootItem");
+        re.setId(ROOT_ITEM_ID);
         re.setItemType(MenuItemType.MENU);
         re.setCaption(messages.getMessage(MESSAGE_PACK, "rootItemCaption"));
         return re;

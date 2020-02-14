@@ -205,7 +205,7 @@ public class MenuItemEntity extends BaseStringIdEntity {
         return children.indexOf(item);
     }
 
-    public void addChildItem(MenuItemEntity item, int index) {
+    public void addChild(MenuItemEntity item, int index) {
         var pi = item.getParent();
         if (pi != null)
             pi.getChildren().remove(item);
@@ -213,6 +213,11 @@ public class MenuItemEntity extends BaseStringIdEntity {
         if (index == -1)
             index = children.size();
         children.add(index, item);
+    }
+
+    public void removeChild(MenuItemEntity item) {
+        item.setParent(null);
+        children.remove(item);
     }
 
     public void visitItems(Consumer<MenuItemEntity> consumer) {

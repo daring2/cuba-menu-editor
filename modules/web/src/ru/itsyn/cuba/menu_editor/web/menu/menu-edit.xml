@@ -23,6 +23,8 @@
                 </form>
                 <textArea dataContainer="editDc" property="description" width="100%" rows="3"
                           caption="msg://ru.itsyn.cuba.menu_editor.entity/MenuEntity.description"/>
+<!--                <textArea dataContainer="editDc" property="config" width="100%" rows="15"-->
+<!--                          caption="msg://ru.itsyn.cuba.menu_editor.entity/MenuEntity.config"/>-->
                 <hbox id="editActions" spacing="true">
                     <button action="windowCommitAndClose"/>
                     <button action="windowCommit"/>
@@ -32,14 +34,18 @@
             <vbox expand="itemsTable" height="100%" width="100%" margin="true" spacing="true">
                 <treeTable id="itemsTable" dataContainer="itemsDc" hierarchyProperty="parent" width="100%">
                     <actions>
+                        <action id="create" type="create"/>
                         <action id="edit" type="edit"/>
+                        <action id="remove" type="remove"/>
                     </actions>
                     <columns>
                         <column id="caption"/>
                         <column id="screen"/>
                     </columns>
                     <buttonsPanel alwaysVisible="true">
+                        <button action="itemsTable.create"/>
                         <button action="itemsTable.edit"/>
+                        <button action="itemsTable.remove"/>
                     </buttonsPanel>
                 </treeTable>
             </vbox>
