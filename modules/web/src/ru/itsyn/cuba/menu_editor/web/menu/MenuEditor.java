@@ -2,12 +2,13 @@ package ru.itsyn.cuba.menu_editor.web.menu;
 
 import com.haulmont.bali.util.Dom4j;
 import com.haulmont.cuba.core.global.LoadContext;
+import com.haulmont.cuba.gui.RemoveOperation;
+import com.haulmont.cuba.gui.RemoveOperation.AfterActionPerformedEvent;
 import com.haulmont.cuba.gui.ScreenBuilders;
+import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.Action.ActionPerformedEvent;
 import com.haulmont.cuba.gui.components.TreeTable;
-import com.haulmont.cuba.gui.model.CollectionChangeType;
 import com.haulmont.cuba.gui.model.CollectionContainer;
-import com.haulmont.cuba.gui.model.CollectionContainer.CollectionChangeEvent;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.screen.*;
@@ -17,6 +18,7 @@ import ru.itsyn.cuba.menu_editor.web.menu_item.MenuConfigBuilder;
 import ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemLoader;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,8 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
     @Inject
     ScreenBuilders screenBuilders;
     @Inject
+    RemoveOperation removeOperation;
+    @Inject
     MenuItemLoader menuItemLoader;
     @Inject
     MenuConfigBuilder menuConfigBuilder;
@@ -42,11 +46,23 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
     CollectionLoader<MenuItemEntity> itemsDl;
     @Inject
     TreeTable<MenuItemEntity> itemsTable;
+    @Named("itemsTable.remove")
+    RemoveAction itemRemoveAction;
 
-    //TODO add rule for remove action
+    @Subscribe
+    public void onInit(InitEvent event) {
+        initRemoveItemAction();
+    }
+
+    void initRemoveItemAction() {
+        itemRemoveAction.addEnabledRule(() -> {
+            var items = itemsTable.getSelected();
+            return !items.contains(getRootItem());
+        });
+    }
 
     @Install(to = "itemsDl", target = Target.DATA_LOADER)
-    private List<MenuItemEntity> loadMenuItems(LoadContext<MenuItemEntity> lc) {
+    List<MenuItemEntity> loadMenuItems(LoadContext<MenuItemEntity> lc) {
         var items = new ArrayList<MenuItemEntity>();
         var rootItem = menuItemLoader.loadMenu(getEditedEntity());
         rootItem.visitItems(items::add);
@@ -80,18 +96,19 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
                 .show();
     }
 
-    @Subscribe(id = "itemsDc", target = Target.DATA_CONTAINER)
-    public void onItemsChange(CollectionChangeEvent<MenuItemEntity> event) {
-        if (event.getChangeType() == CollectionChangeType.REMOVE_ITEMS) {
-            event.getChanges().forEach(this::onItemRemove);
-        }
+    @Subscribe("itemsTable.remove")
+    void onItemRemove(ActionPerformedEvent event) {
+        removeOperation.builder(itemsTable)
+                .afterActionPerformed(this::afterItemRemove)
+                .remove();
     }
 
-    void onItemRemove(MenuItemEntity item) {
-        item.getParent().removeChild(item);
+    void afterItemRemove(AfterActionPerformedEvent<MenuItemEntity> event) {
         var items = itemsDc.getMutableItems();
-        //TODO remove children
-        // item.visitItems(items::remove);
+        for (MenuItemEntity item : event.getItems()) {
+            item.getParent().removeChild(item);
+            item.visitItems(items::remove);
+        }
     }
 
     @Subscribe
