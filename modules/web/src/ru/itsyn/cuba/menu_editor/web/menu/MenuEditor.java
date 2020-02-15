@@ -9,6 +9,7 @@ import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.Action.ActionPerformedEvent;
 import com.haulmont.cuba.gui.components.TreeTable;
 import com.haulmont.cuba.gui.model.CollectionContainer;
+import com.haulmont.cuba.gui.model.CollectionContainer.CollectionChangeEvent;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.screen.*;
@@ -19,10 +20,11 @@ import ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemLoader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.ArrayList;
 import java.util.List;
 
+import static com.haulmont.cuba.gui.model.CollectionChangeType.ADD_ITEMS;
 import static ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemFactory.ROOT_ITEM_ID;
+import static ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemUtils.buildItemList;
 
 @UiController("menu_MenuEntity.edit")
 @UiDescriptor("menu-edit.xml")
@@ -63,10 +65,19 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
 
     @Install(to = "itemsDl", target = Target.DATA_LOADER)
     List<MenuItemEntity> loadMenuItems(LoadContext<MenuItemEntity> lc) {
-        var items = new ArrayList<MenuItemEntity>();
         var rootItem = menuItemLoader.loadMenu(getEditedEntity());
-        rootItem.visitItems(items::add);
-        return items;
+        return buildItemList(rootItem);
+    }
+
+    @Subscribe(id = "itemsDc", target = Target.DATA_CONTAINER)
+    public void onItemsChange(CollectionChangeEvent<MenuItemEntity> event) {
+        if (event.getChangeType() == ADD_ITEMS)
+            refreshItems();
+    }
+
+    void refreshItems() {
+        var rootItem = getRootItem();
+        itemsDc.setItems(buildItemList(rootItem));
     }
 
     @Subscribe("itemsTable.create")
@@ -75,7 +86,6 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
         if (si == null) si = getRootItem();
         var parent = si.isMenu() ? si : si.getParent();
         var index = parent != si ? parent.getChildIndex(si) + 1 : 0;
-        //TODO apply index for table
         screenBuilders.editor(itemsTable)
                 .newEntity()
                 .withOpenMode(OpenMode.DIALOG)

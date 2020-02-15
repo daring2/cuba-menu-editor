@@ -35,8 +35,12 @@ public class MenuItemLoader {
     }
 
     public MenuItemEntity loadMenu(MenuEntity menu) {
-        var rootItem = menuItemFactory.createRootItem();
         var items = configLoader.loadConfig(menu.getConfig());
+        return buildMenu(items);
+    }
+
+    public MenuItemEntity buildMenu(List<MenuItem> items) {
+        var rootItem = menuItemFactory.createRootItem();
         items.forEach(i -> buildEntities(i, rootItem));
         return rootItem;
     }
