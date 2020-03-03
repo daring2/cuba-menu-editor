@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import static com.haulmont.cuba.core.global.UuidProvider.createUuid;
 import static java.lang.Boolean.parseBoolean;
+import static org.springframework.util.StringUtils.isEmpty;
 
 @Component("menu_MenuItemFactory")
 public class MenuItemFactory {
@@ -32,7 +33,7 @@ public class MenuItemFactory {
     public MenuItemEntity createItem(MenuItem item) {
         var e = new MenuItemEntity();
         e.setId(item.getId());
-        e.setCaption(messages.getMainMessage("menu-config." + e.getId()));
+        e.setCaption(getCaption(item));
         e.setDescription(item.getDescription());
         e.setStyleName(item.getStylename());
         e.setIcon(item.getIcon());
@@ -57,6 +58,15 @@ public class MenuItemFactory {
             }
         }
         return e;
+    }
+
+    String getCaption(MenuItem item) {
+        var caption = item.getCaption();
+        if (isEmpty(caption)) {
+            var key = "menu-config." + item.getId();
+            caption = messages.getMainMessage(key);
+        }
+        return caption;
     }
 
     String buildSeparatorId(MenuItem item) {
