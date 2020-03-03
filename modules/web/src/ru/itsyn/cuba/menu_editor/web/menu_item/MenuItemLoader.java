@@ -56,6 +56,8 @@ public class MenuItemLoader {
 
         public List<MenuItem> loadConfig(String xml) {
             rootItems = new ArrayList<>();
+            if (xml == null)
+                return rootItems;
             var re = Dom4j.readDocument(xml).getRootElement();
             loadMenuItems(re, null);
             return rootItems;
