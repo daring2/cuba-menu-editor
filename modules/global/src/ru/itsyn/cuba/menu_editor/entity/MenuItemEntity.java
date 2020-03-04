@@ -4,11 +4,16 @@ import com.haulmont.chile.core.annotations.MetaClass;
 import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.BaseStringIdEntity;
+import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.core.global.MessageTools;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+
+import static com.haulmont.cuba.core.global.MessageTools.MAIN_MARK;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @NamePattern("%s|caption")
 @MetaClass(name = "menu_MenuItemEntity")
@@ -20,7 +25,7 @@ public class MenuItemEntity extends BaseStringIdEntity {
     protected String id;
 
     @MetaProperty
-    protected String caption;
+    protected String captionKey;
 
     @NotNull
     @MetaProperty(mandatory = true)
@@ -67,12 +72,12 @@ public class MenuItemEntity extends BaseStringIdEntity {
 
     //TODO add attributes params, permissions, screenProperties
 
-    public String getCaption() {
-        return caption;
+    public String getCaptionKey() {
+        return captionKey;
     }
 
-    public void setCaption(String caption) {
-        this.caption = caption;
+    public void setCaptionKey(String captionKey) {
+        this.captionKey = captionKey;
     }
 
     public List<MenuItemEntity> getChildren() {
@@ -195,6 +200,16 @@ public class MenuItemEntity extends BaseStringIdEntity {
     @Override
     public void setId(String id) {
         this.id = id;
+    }
+
+    @MetaProperty(related = "captionKey")
+    public String getCaption() {
+        var key = captionKey;
+        if (isEmpty(key))
+            key = MAIN_MARK + "menu-config." + id;
+        //TODO refactor
+        return AppBeans.get(MessageTools.class)
+                .loadString(null, key);
     }
 
     public boolean isMenu() {

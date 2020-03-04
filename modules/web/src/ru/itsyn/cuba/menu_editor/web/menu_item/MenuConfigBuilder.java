@@ -34,7 +34,7 @@ public class MenuConfigBuilder {
         if (itemType == MenuItemType.SEPARATOR)
             return;
         addAttributeValue(e, "id", item.getId());
-        addAttributeValue(e, "caption", item.getCaption());
+        addAttributeValue(e, "caption", item.getCaptionKey());
         addAttributeValue(e, "description", item.getDescription());
         addAttributeValue(e, "stylename", item.getStyleName());
         addAttributeValue(e, "icon", item.getIcon());

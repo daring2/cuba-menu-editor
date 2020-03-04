@@ -11,7 +11,6 @@ import javax.inject.Inject;
 
 import static com.haulmont.cuba.core.global.UuidProvider.createUuid;
 import static java.lang.Boolean.parseBoolean;
-import static org.springframework.util.StringUtils.isEmpty;
 
 @Component("menu_MenuItemFactory")
 public class MenuItemFactory {
@@ -26,14 +25,14 @@ public class MenuItemFactory {
         var re = new MenuItemEntity();
         re.setId(ROOT_ITEM_ID);
         re.setItemType(MenuItemType.MENU);
-        re.setCaption(messages.getMessage(MESSAGE_PACK, "rootItemCaption"));
+        re.setCaptionKey(messages.getMessage(MESSAGE_PACK, "rootItemCaption"));
         return re;
     }
 
     public MenuItemEntity createItem(MenuItem item) {
         var e = new MenuItemEntity();
         e.setId(item.getId());
-        e.setCaption(getCaption(item));
+        e.setCaptionKey(item.getCaption());
         e.setDescription(item.getDescription());
         e.setStyleName(item.getStylename());
         e.setIcon(item.getIcon());
@@ -43,7 +42,7 @@ public class MenuItemFactory {
         } else if (item.isSeparator()) {
             e.setItemType(MenuItemType.SEPARATOR);
             e.setId(buildSeparatorId(item));
-            e.setCaption(messages.getMessage(e.getItemType()));
+            e.setCaptionKey(messages.getMessage(e.getItemType()));
         } else {
             e.setItemType(MenuItemType.SCREEN);
             e.setScreen(item.getScreen());
@@ -58,15 +57,6 @@ public class MenuItemFactory {
             }
         }
         return e;
-    }
-
-    String getCaption(MenuItem item) {
-        var caption = item.getCaption();
-        if (isEmpty(caption)) {
-            var key = "menu-config." + item.getId();
-            caption = messages.getMainMessage(key);
-        }
-        return caption;
     }
 
     String buildSeparatorId(MenuItem item) {

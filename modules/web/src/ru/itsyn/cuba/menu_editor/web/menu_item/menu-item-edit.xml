@@ -11,20 +11,21 @@
         <form id="form" dataContainer="editDc" width="100%">
             <column width="100%">
                 <textField id="idField" property="id"/>
-                <textField id="parentField" property="parent" editable="false"/>
+                <lookupField id="openTypeField" property="openType"/>
+                <textField id="captionKeyField" property="captionKey"/>
+                <textField id="descriptionField" property="description"/>
                 <textField id="screenField" property="screen"/>
                 <textField id="beanField" property="bean"/>
-                <lookupField id="openTypeField" property="openType"/>
                 <checkBox id="resizableField" property="resizable"/>
                 <textField id="styleNameField" property="styleName"/>
-                <textField id="descriptionField" property="description"/>
             </column>
             <column width="100%">
                 <lookupField id="itemTypeField" property="itemType"/>
-                <textField id="captionField" property="caption"/>
+                <textField id="parentField" property="parent" editable="false"/>
+                <textField id="captionField" property="caption" editable="false"/>
+                <textField id="shortcutField" property="shortcut"/>
                 <textField id="runnableClassField" property="runnableClass"/>
                 <textField id="beanMethodField" property="beanMethod"/>
-                <textField id="shortcutField" property="shortcut"/>
                 <checkBox id="expandedField" property="expanded"/>
                 <textField id="iconField" property="icon"/>
             </column>
