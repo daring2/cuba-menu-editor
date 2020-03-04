@@ -15,6 +15,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemFactory.MESSAGE_PACK;
+import static ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemFactory.ROOT_ITEM_ID;
 
 public class MenuItemFactoryTest {
 
@@ -32,9 +33,9 @@ public class MenuItemFactoryTest {
         when(f.messages.getMessage(MESSAGE_PACK, "rootItemCaption"))
                 .thenReturn("root caption");
         var ri = f.createRootItem();
-        assertEquals("root", ri.getId());
+        assertEquals(ROOT_ITEM_ID, ri.getId());
         assertEquals(MenuItemType.MENU, ri.getItemType());
-        assertEquals("root caption", ri.getCaption());
+        assertEquals("root caption", ri.getCaptionKey());
     }
 
     @Test
@@ -46,6 +47,7 @@ public class MenuItemFactoryTest {
                 .thenReturn("separator caption");
 
         var mi = new MenuItem("mi1");
+        mi.setCaption("caption1");
         mi.setDescription("desc1");
         mi.setStylename("style1");
         mi.setIcon("icon1");
@@ -80,7 +82,7 @@ public class MenuItemFactoryTest {
     void assertMenuItem(MenuItemEntity item, MenuItemType itemType) {
         assertEquals(itemType, item.getItemType());
         if (itemType != MenuItemType.SEPARATOR) {
-            assertEquals("menu-config.mi1.message", item.getCaption());
+            assertEquals("caption1", item.getCaptionKey());
             assertEquals("desc1", item.getDescription());
             assertEquals("style1", item.getStyleName());
             assertEquals("icon1", item.getIcon());
@@ -89,7 +91,7 @@ public class MenuItemFactoryTest {
             assertEquals(true, item.getExpanded());
             assertNull(item.getScreen());
         } else if (itemType == MenuItemType.SEPARATOR) {
-            assertEquals("separator caption", item.getCaption());
+            assertEquals("separator caption", item.getCaptionKey());
             assertNull(item.getScreen());
         } if (itemType == MenuItemType.SCREEN) {
             assertEquals("screen1", item.getScreen());
