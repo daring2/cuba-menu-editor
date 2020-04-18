@@ -4,6 +4,7 @@ import com.haulmont.cuba.gui.components.mainwindow.AppMenu;
 import com.haulmont.cuba.gui.components.mainwindow.SideMenu;
 import com.haulmont.cuba.gui.config.MenuConfig;
 import com.haulmont.cuba.web.AppUI;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -19,7 +20,10 @@ public class AppMenuManager {
     public void reloadAppMenu() {
         menuConfig.reset();
         var topWindow = AppUI.getCurrent().getTopLevelWindowNN();
-        var appMenu = (AppMenu) topWindow.getComponent("appMenu");
+        var appMenu = (AppMenu) ObjectUtils.firstNonNull(
+                topWindow.getComponent("appMenu"),
+                topWindow.getComponent("mainMenu")
+        );
         if (appMenu != null) {
             removeAllMenuItems(appMenu);
             appMenu.loadMenu();
