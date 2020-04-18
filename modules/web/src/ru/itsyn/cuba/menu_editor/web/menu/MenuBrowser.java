@@ -1,7 +1,6 @@
 package ru.itsyn.cuba.menu_editor.web.menu;
 
 import com.haulmont.cuba.gui.components.Action.ActionPerformedEvent;
-import com.haulmont.cuba.gui.config.MenuConfig;
 import com.haulmont.cuba.gui.screen.*;
 import ru.itsyn.cuba.menu_editor.entity.MenuEntity;
 
@@ -14,11 +13,11 @@ import javax.inject.Inject;
 public class MenuBrowser extends StandardLookup<MenuEntity> {
 
     @Inject
-    protected MenuConfig menuConfig;
+    protected AppMenuManager appMenuManager;
 
     @Subscribe("table.apply")
     public void onMenuApply(ActionPerformedEvent event) {
-        menuConfig.reset();
+        appMenuManager.reloadAppMenu();
     }
 
 }
