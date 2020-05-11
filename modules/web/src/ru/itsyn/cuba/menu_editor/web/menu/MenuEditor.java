@@ -13,6 +13,13 @@ import com.haulmont.cuba.gui.model.CollectionContainer.CollectionChangeEvent;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.screen.*;
+import com.vaadin.shared.ui.dnd.EffectAllowed;
+import com.vaadin.shared.ui.grid.DropLocation;
+import com.vaadin.shared.ui.grid.DropMode;
+import com.vaadin.ui.TreeGrid;
+import com.vaadin.ui.components.grid.TreeGridDragSource;
+import com.vaadin.ui.components.grid.TreeGridDropEvent;
+import com.vaadin.ui.components.grid.TreeGridDropTarget;
 import ru.itsyn.cuba.menu_editor.entity.MenuEntity;
 import ru.itsyn.cuba.menu_editor.entity.MenuItemEntity;
 import ru.itsyn.cuba.menu_editor.web.menu_item.MenuConfigBuilder;
@@ -23,6 +30,7 @@ import javax.inject.Named;
 import java.util.List;
 
 import static com.haulmont.cuba.gui.model.CollectionChangeType.ADD_ITEMS;
+import static com.vaadin.shared.ui.dnd.DragSourceState.DATA_TYPE_TEXT_PLAIN;
 import static ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemFactory.ROOT_ITEM_ID;
 import static ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemUtils.buildItemList;
 
@@ -49,11 +57,53 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
     @Inject
     TreeDataGrid<MenuItemEntity> itemsTable;
     @Named("itemsTable.remove")
-    RemoveAction itemRemoveAction;
+    RemoveAction<MenuItemEntity> itemRemoveAction;
 
     @Subscribe
     public void onInit(InitEvent event) {
+        initItemDragAndDrop();
         initRemoveItemAction();
+    }
+
+    void initItemDragAndDrop() {
+        var grid = (TreeGrid<MenuItemEntity>) itemsTable.unwrap(TreeGrid.class);
+        var dragSource = new TreeGridDragSource<>(grid);
+        dragSource.setEffectAllowed(EffectAllowed.MOVE);
+        dragSource.setDragDataGenerator(DATA_TYPE_TEXT_PLAIN, MenuItemEntity::getId);
+        var dropTarget = new TreeGridDropTarget<>(grid, DropMode.ON_TOP_OR_BETWEEN);
+        //TODO add DropCriteriaScript
+        dropTarget.addTreeGridDropListener(this::onDropItem);
+    }
+
+    void onDropItem(TreeGridDropEvent<MenuItemEntity> event) {
+        var item = event.getDataTransferData(DATA_TYPE_TEXT_PLAIN)
+                .map(itemsDc::getItemOrNull)
+                .orElse(null);
+        if (item == null || getRootItem().equals(item))
+            return;
+        var targetItem = event.getDropTargetRow().orElse(null);
+        if (targetItem == null)
+            return;
+        var dropLoc = event.getDropLocation();
+        if (dropLoc == DropLocation.ON_TOP && targetItem.isMenu()) {
+            moveItem(item, targetItem, 0);
+        } else {
+            var parent = targetItem.getParent();
+            var index = parent.getChildIndex(targetItem);
+            if (dropLoc != DropLocation.ABOVE)
+                index += 1;
+            moveItem(item, parent, index);
+        }
+    }
+
+    void moveItem(MenuItemEntity item, MenuItemEntity parent, int index) {
+        //TODO check cyclic dependence
+        var pi = item.getParent();
+        if (pi == parent && pi.getChildIndex(item) < index)
+            index -= 1;
+        pi.removeChild(item);
+        parent.addChild(item, index);
+        refreshItems();
     }
 
     void initRemoveItemAction() {
