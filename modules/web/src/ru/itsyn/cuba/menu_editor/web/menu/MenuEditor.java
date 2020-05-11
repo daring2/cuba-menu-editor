@@ -7,7 +7,7 @@ import com.haulmont.cuba.gui.RemoveOperation.AfterActionPerformedEvent;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.Action.ActionPerformedEvent;
-import com.haulmont.cuba.gui.components.TreeTable;
+import com.haulmont.cuba.gui.components.TreeDataGrid;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionContainer.CollectionChangeEvent;
 import com.haulmont.cuba.gui.model.CollectionLoader;
@@ -47,7 +47,7 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
     @Inject
     CollectionLoader<MenuItemEntity> itemsDl;
     @Inject
-    TreeTable<MenuItemEntity> itemsTable;
+    TreeDataGrid<MenuItemEntity> itemsTable;
     @Named("itemsTable.remove")
     RemoveAction itemRemoveAction;
 

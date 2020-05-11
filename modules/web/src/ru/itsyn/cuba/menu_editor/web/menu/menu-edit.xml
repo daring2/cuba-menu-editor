@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd" caption="msg://editorCaption" focusComponent="form"
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption" focusComponent="form"
         messagesPack="ru.itsyn.cuba.menu_editor.web.menu">
     <data>
         <instance id="editDc" class="ru.itsyn.cuba.menu_editor.entity.MenuEntity" view="_local">
@@ -32,22 +33,22 @@
                 </hbox>
             </vbox>
             <vbox expand="itemsTable" height="100%" width="100%" margin="true" spacing="true">
-                <treeTable id="itemsTable" dataContainer="itemsDc" hierarchyProperty="parent" width="100%">
+                <treeDataGrid id="itemsTable" dataContainer="itemsDc" hierarchyProperty="parent" width="100%">
                     <actions>
                         <action id="create" type="create"/>
                         <action id="edit" type="edit"/>
                         <action id="remove" type="remove"/>
                     </actions>
                     <columns>
-                        <column id="caption"/>
-                        <column id="screen"/>
+                        <column property="caption"/>
+                        <column property="screen"/>
                     </columns>
                     <buttonsPanel alwaysVisible="true">
                         <button action="itemsTable.create"/>
                         <button action="itemsTable.edit"/>
                         <button action="itemsTable.remove"/>
                     </buttonsPanel>
-                </treeTable>
+                </treeDataGrid>
             </vbox>
         </split>
     </layout>
