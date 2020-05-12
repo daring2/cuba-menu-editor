@@ -5,10 +5,24 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class MenuItemEntityTest {
+
+    @Test
+    public void testHasAncestor() {
+        var ri = newItem("root", null);
+        assertFalse(ri.hasAncestor(ri));
+        var i1 = newItem("i1", ri);
+        assertFalse(ri.hasAncestor(i1));
+        assertTrue(i1.hasAncestor(ri));
+        var i2 = newItem("i2", ri);
+        assertTrue(i2.hasAncestor(ri));
+        assertFalse(i2.hasAncestor(i1));
+        var i21 = newItem("i21", i2);
+        assertTrue(i21.hasAncestor(i2));
+        assertTrue(i21.hasAncestor(ri));
+    }
 
     @Test
     public void testVisitItems() {

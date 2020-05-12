@@ -216,6 +216,16 @@ public class MenuItemEntity extends BaseStringIdEntity {
         return getItemType() == MenuItemType.MENU;
     }
 
+    public boolean hasAncestor(MenuItemEntity item) {
+        var pi = getParent();
+        while (pi != null) {
+            if (pi.equals(item))
+                return true;
+            pi = pi.getParent();
+        }
+        return false;
+    }
+
     public int getChildIndex(MenuItemEntity item) {
         return children.indexOf(item);
     }

@@ -2,6 +2,7 @@ package ru.itsyn.cuba.menu_editor.web.menu;
 
 import com.haulmont.bali.util.Dom4j;
 import com.haulmont.cuba.core.global.LoadContext;
+import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.RemoveOperation;
 import com.haulmont.cuba.gui.RemoveOperation.AfterActionPerformedEvent;
 import com.haulmont.cuba.gui.ScreenBuilders;
@@ -43,6 +44,8 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
     @Inject
     ScreenBuilders screenBuilders;
     @Inject
+    Notifications notifications;
+    @Inject
     RemoveOperation removeOperation;
     @Inject
     MenuItemLoader menuItemLoader;
@@ -50,6 +53,8 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
     MenuConfigBuilder menuConfigBuilder;
     @Inject
     DataContext dataContext;
+    @Inject
+    MessageBundle messageBundle;
     @Inject
     CollectionContainer<MenuItemEntity> itemsDc;
     @Inject
@@ -97,7 +102,13 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
     }
 
     void moveItem(MenuItemEntity item, MenuItemEntity parent, int index) {
-        //TODO check cyclic dependence
+        if (parent.equals(item) || parent.hasAncestor(item)) {
+            var warning = messageBundle.getMessage("cyclicDependencyWarning");
+            notifications.create()
+                    .withCaption(warning)
+                    .show();
+            return;
+        }
         var pi = item.getParent();
         if (pi == parent && pi.getChildIndex(item) < index)
             index -= 1;
