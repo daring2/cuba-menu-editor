@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
-        caption="msg://editorCaption" focusComponent="form"
-        messagesPack="ru.itsyn.cuba.menu_editor.web.menu">
+        messagesPack="ru.itsyn.cuba.menu_editor.web.menu"
+        caption="msg://editorCaption" focusComponent="form">
     <data>
         <instance id="editDc" class="ru.itsyn.cuba.menu_editor.entity.MenuEntity" view="_local">
             <loader/>
@@ -38,6 +38,7 @@
                         <action id="create" type="create"/>
                         <action id="edit" type="edit"/>
                         <action id="remove" type="remove"/>
+                        <action id="resetMenu" caption="msg://resetMenu"/>
                     </actions>
                     <columns>
                         <column property="caption"/>
@@ -47,6 +48,7 @@
                         <button action="itemsTable.create"/>
                         <button action="itemsTable.edit"/>
                         <button action="itemsTable.remove"/>
+                        <button action="itemsTable.resetMenu"/>
                     </buttonsPanel>
                 </treeDataGrid>
             </vbox>

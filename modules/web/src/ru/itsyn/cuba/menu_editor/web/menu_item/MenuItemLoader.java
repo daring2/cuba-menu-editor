@@ -52,6 +52,11 @@ public class MenuItemLoader {
         item.getChildren().forEach(i -> buildEntities(i, e));
     }
 
+    public MenuItemEntity loadDefaultMenu() {
+        var items = configLoader.loadDefaultConfig();
+        return buildMenu(items);
+    }
+
     static class ConfigLoader extends MenuConfig {
 
         public List<MenuItem> loadConfig(String xml) {
@@ -60,6 +65,11 @@ public class MenuItemLoader {
                 return rootItems;
             var re = Dom4j.readDocument(xml).getRootElement();
             loadMenuItems(re, null);
+            return rootItems;
+        }
+
+        public List<MenuItem> loadDefaultConfig() {
+            init();
             return rootItems;
         }
 

@@ -34,6 +34,7 @@ import static com.haulmont.cuba.gui.model.CollectionChangeType.ADD_ITEMS;
 import static com.vaadin.shared.ui.dnd.DragSourceState.DATA_TYPE_TEXT_PLAIN;
 import static ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemFactory.ROOT_ITEM_ID;
 import static ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemUtils.buildItemList;
+import static ru.itsyn.cuba.menu_editor.web.util.DialogUtils.newConfirmationDialog;
 
 @UiController("menu_MenuEntity.edit")
 @UiDescriptor("menu-edit.xml")
@@ -182,10 +183,28 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
         }
     }
 
+    @Subscribe("itemsTable.resetMenu")
+    void onResetMenu(ActionPerformedEvent event) {
+        newConfirmationDialog(
+                messageBundle.getMessage("resetConfirmation"),
+                this::resetMenu
+        ).show();
+    }
+
+    void resetMenu(ActionPerformedEvent event) {
+        var rootItem = menuItemLoader.loadDefaultMenu();
+        updateMenuConfig(rootItem);
+        itemsDl.load();
+    }
+
     @Subscribe
     void onBeforeCommitChanges(BeforeCommitChangesEvent event) {
         var rootItem = getRootItem();
         if (rootItem == null) return;
+        updateMenuConfig(rootItem);
+    }
+
+    void updateMenuConfig(MenuItemEntity rootItem) {
         var doc = menuConfigBuilder.buildMenuConfig(rootItem.getChildren());
         var config = Dom4j.writeDocument(doc, true);
         getEditedEntity().setConfig(config);
