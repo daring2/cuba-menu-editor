@@ -17,15 +17,12 @@
                 <form id="form" dataContainer="editDc" width="100%">
                     <column width="100%">
                         <textField id="nameField" property="name"/>
+                        <textArea id="descriptionField" property="description" rows="3" colspan="2"/>
                     </column>
                     <column width="100%">
                         <textField id="codeField" property="code"/>
                     </column>
                 </form>
-                <textArea dataContainer="editDc" property="description" width="100%" rows="3"
-                          caption="msg://ru.itsyn.cuba.menu_editor.entity/MenuEntity.description"/>
-<!--                <textArea dataContainer="editDc" property="config" width="100%" rows="15"-->
-<!--                          caption="msg://ru.itsyn.cuba.menu_editor.entity/MenuEntity.config"/>-->
                 <hbox id="editActions" spacing="true">
                     <button action="windowCommitAndClose"/>
                     <button action="windowCommit"/>
