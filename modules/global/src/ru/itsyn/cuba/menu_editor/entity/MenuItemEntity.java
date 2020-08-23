@@ -101,7 +101,7 @@ public class MenuItemEntity extends BaseStringIdEntity {
     }
 
     public void setItemType(MenuItemType itemType) {
-        this.itemType = itemType == null ? null : itemType.getId();
+        this.itemType = itemType.getId();
     }
 
     public Boolean getExpanded() {

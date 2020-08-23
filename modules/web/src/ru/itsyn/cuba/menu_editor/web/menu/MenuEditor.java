@@ -72,7 +72,7 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
     }
 
     void initItemDragAndDrop() {
-        var grid = (TreeGrid<MenuItemEntity>) itemsTable.unwrap(TreeGrid.class);
+        TreeGrid<MenuItemEntity> grid = itemsTable.unwrap(TreeGrid.class);
         var dragSource = new TreeGridDragSource<>(grid);
         dragSource.setEffectAllowed(EffectAllowed.MOVE);
         dragSource.setDragDataGenerator(DATA_TYPE_TEXT_PLAIN, MenuItemEntity::getId);
