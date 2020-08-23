@@ -69,7 +69,7 @@ public class MenuItemLoader {
         }
 
         public List<MenuItem> loadDefaultConfig() {
-            init();
+            super.init();
             return rootItems;
         }
 
