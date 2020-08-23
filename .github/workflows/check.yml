@@ -24,4 +24,6 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
       - name: build
-        run: ./gradlew build
+        env:
+          SONAR_TOKEN:  ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew build sonarqube
