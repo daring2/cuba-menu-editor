@@ -10,6 +10,7 @@ buildscript {
 }
 
 plugins {
+    id "jacoco"
     id "org.sonarqube" version "3.0"
 }
 
@@ -52,6 +53,7 @@ configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'java')
     apply(plugin: 'maven')
     apply(plugin: 'cuba')
+    apply(plugin: 'jacoco')
     apply(plugin: 'org.sonarqube')
 
     sourceCompatibility = JavaVersion.VERSION_11
@@ -69,6 +71,11 @@ configure([globalModule, coreModule, webModule]) {
 
     artifacts {
         archives sourceJar
+    }
+
+    jacocoTestReport {
+        dependsOn test
+        reports.xml.enabled = true
     }
 }
 
