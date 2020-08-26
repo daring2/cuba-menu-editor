@@ -13,6 +13,7 @@ create table MENU_MENU (
     CODE varchar(255),
     DESCRIPTION varchar(2000),
     CONFIG longvarchar,
+    ROLE_ID varchar(36),
     --
     primary key (ID)
 )^

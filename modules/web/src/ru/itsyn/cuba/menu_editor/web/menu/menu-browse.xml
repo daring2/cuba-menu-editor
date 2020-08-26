@@ -2,7 +2,7 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd" caption="msg://browseCaption" focusComponent="table"
         messagesPack="ru.itsyn.cuba.menu_editor.web.menu">
     <data readOnly="true">
-        <collection id="tableDc" class="ru.itsyn.cuba.menu_editor.entity.MenuEntity" view="_local">
+        <collection id="tableDc" class="ru.itsyn.cuba.menu_editor.entity.MenuEntity" view="full">
             <loader id="tableDl">
                 <query>select e from menu_MenuEntity e order by e.name</query>
             </loader>
@@ -23,6 +23,7 @@
             <columns>
                 <column id="name"/>
                 <column id="code"/>
+                <column id="role"/>
                 <column id="description" collapsed="true"/>
             </columns>
             <rowsCount/>
