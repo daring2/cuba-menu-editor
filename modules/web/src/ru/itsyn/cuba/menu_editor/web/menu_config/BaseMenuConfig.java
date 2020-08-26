@@ -1,4 +1,4 @@
-package ru.itsyn.cuba.menu_editor.web.menu;
+package ru.itsyn.cuba.menu_editor.web.menu_config;
 
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.config.MenuConfig;
@@ -17,8 +17,8 @@ public class BaseMenuConfig extends MenuConfig {
         var defMenu = loadDefaultMenu();
         if (defMenu != null) {
             rootItems.clear();
-            var re = dom4JTools.readDocument(defMenu.getConfig()).getRootElement();
-            loadMenuItems(re, null);
+            var d = dom4JTools.readDocument(defMenu.getConfig());
+            loadMenuItems(d.getRootElement(), null);
             return;
         }
         super.init();
