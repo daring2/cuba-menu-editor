@@ -14,7 +14,7 @@ plugins {
     id "org.sonarqube" version "3.0"
 }
 
-def modulePrefix = 'app'
+def modulePrefix = 'menu-editor'
 
 def globalModule = project(":${modulePrefix}-global")
 def coreModule = project(":${modulePrefix}-core")
