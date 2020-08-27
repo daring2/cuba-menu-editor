@@ -17,11 +17,12 @@
                 <form id="form" dataContainer="editDc" width="100%">
                     <column width="100%">
                         <textField id="nameField" property="name"/>
-                        <textArea id="descriptionField" property="description" rows="3" colspan="2"/>
                         <pickerField id="roleField" property="role"/>
+                        <textArea id="descriptionField" property="description" rows="3" colspan="2"/>
                     </column>
                     <column width="100%">
                         <textField id="codeField" property="code"/>
+                        <textField id="priorityField" property="priority"/>
                     </column>
                 </form>
                 <hbox id="editActions" spacing="true">

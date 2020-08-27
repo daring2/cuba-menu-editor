@@ -25,6 +25,7 @@
                 <column id="name"/>
                 <column id="code"/>
                 <column id="role"/>
+                <column id="priority"/>
                 <column id="description" collapsed="true"/>
             </columns>
             <rowsCount/>

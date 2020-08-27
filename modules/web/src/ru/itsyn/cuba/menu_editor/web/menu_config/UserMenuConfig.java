@@ -44,7 +44,7 @@ public class UserMenuConfig extends MenuConfig {
         var user = session.getCurrentOrSubstitutedUser();
         var query = "select e from menu_MenuEntity e" +
                 " where e.role in (select r.role from sec$UserRole r where r.user.id = :userId)" +
-                " order by e.code";
+                " order by e.priority desc";
         return dataManager.load(MenuEntity.class)
                 .query(query)
                 .parameter("userId", user.getId())

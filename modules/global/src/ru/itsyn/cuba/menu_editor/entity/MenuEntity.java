@@ -24,6 +24,9 @@ public class MenuEntity extends StandardEntity {
     @Column(name = "CODE", unique = true)
     protected String code;
 
+    @Column(name = "PRIORITY")
+    private Integer priority;
+
     @Column(name = "DESCRIPTION", length = 2000)
     protected String description;
 
@@ -35,6 +38,14 @@ public class MenuEntity extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ROLE_ID")
     private Role role;
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
 
     public Role getRole() {
         return role;

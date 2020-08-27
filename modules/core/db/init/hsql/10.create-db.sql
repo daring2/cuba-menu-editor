@@ -11,6 +11,7 @@ create table MENU_MENU (
     --
     NAME varchar(255) not null,
     CODE varchar(255),
+    PRIORITY integer,
     DESCRIPTION varchar(2000),
     CONFIG longvarchar,
     ROLE_ID varchar(36),
