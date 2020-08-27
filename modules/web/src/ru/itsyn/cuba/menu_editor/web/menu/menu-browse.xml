@@ -17,6 +17,7 @@
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
+                <action id="copy" caption="msg://copy" icon="icons/copy.png" trackSelection="true"/>
                 <action id="remove" type="remove"/>
                 <action id="apply" caption="Apply"/>
             </actions>
@@ -30,6 +31,7 @@
             <buttonsPanel id="buttonsPanel" alwaysVisible="true">
                 <button id="createBtn" action="table.create"/>
                 <button id="editBtn" action="table.edit"/>
+                <button id="copyBtn" action="table.copy"/>
                 <button id="removeBtn" action="table.remove"/>
                 <button id="applyBtn" action="table.apply"/>
             </buttonsPanel>
