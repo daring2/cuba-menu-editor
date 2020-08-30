@@ -6,6 +6,7 @@ buildscript {
     }
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
     }
 }
 
@@ -27,8 +28,8 @@ apply(plugin: 'cuba')
 cuba {
     artifact {
         group = 'ru.itsyn.cuba.menu_editor'
-        version = '0.1'
-        isSnapshot = true
+        version = project.version
+        isSnapshot = false
     }
     tomcat {
         dir = "$project.rootDir/deploy/tomcat"
@@ -90,6 +91,13 @@ configure(globalModule) {
     entitiesEnhancing {
         main {
             enabled = true
+        }
+    }
+
+    jar {
+        manifest {
+            attributes('App-Component-Id': cuba.artifact.group)
+            attributes('App-Component-Version': cuba.artifact.version + (cuba.artifact.isSnapshot ? '-SNAPSHOT' : ''))
         }
     }
 }
@@ -193,3 +201,19 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
 
 restart.finalizedBy start
 
+subprojects {
+    apply plugin: 'com.jfrog.bintray'
+    bintray {
+        user = 'its-admin'
+        key = findProperty("its.bintrayKey")
+        configurations = ['archives']
+        publish = true
+        pkg {
+            repo = 'it-syn'
+            name = 'cuba-menu-editor'
+            licenses = ['Apache-2.0']
+            vcsUrl = 'https://gitlab.com/it-syn/its-common'
+            version.name = project.version
+        }
+    }
+}
