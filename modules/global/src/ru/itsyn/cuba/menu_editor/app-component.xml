@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<app-component xmlns="http://schemas.haulmont.com/cuba/app-component.xsd"
+               dependsOn="com.haulmont.cuba">
+
+    <module name="global" blocks="*">
+        <artifact name="menu-editor-global" appJar="true"/>
+
+        <property name="cuba.persistenceConfig" value="+ru/itsyn/cuba/menu_editor/persistence.xml"/>
+        <property name="cuba.metadataConfig" value="+ru/itsyn/cuba/menu_editor/metadata.xml"/>
+        <property name="cuba.viewsConfig" value="+ru/itsyn/cuba/menu_editor/views.xml"/>
+    </module>
+    <module name="core" dependsOn="global" blocks="core">
+        <artifact name="menu-editor-core" appJar="true"/>
+        <artifact name="menu-editor-core" classifier="db" ext="zip" configuration="dbscripts"/>
+
+        <property name="cuba.springContextConfig" value="+ru/itsyn/cuba/menu_editor/spring.xml"/>
+        <property name="cuba.mainMessagePack" value="+ru.itsyn.cuba.menu_editor.core"/>
+    </module>
+    <module name="web" dependsOn="global" blocks="web">
+        <artifact name="menu-editor-web" appJar="true"/>
+        <artifact name="menu-editor-web" classifier="web" ext="zip" configuration="webcontent"/>
+
+        <property name="cuba.springContextConfig" value="+ru/itsyn/cuba/menu_editor/web-spring.xml"/>
+        <property name="cuba.dispatcherSpringContextConfig"
+                  value="+ru/itsyn/cuba/menu_editor/web-dispatcher-spring.xml"/>
+        <property name="cuba.windowConfig" value="+ru/itsyn/cuba/menu_editor/web-screens.xml"/>
+        <property name="cuba.menuConfig" value="+ru/itsyn/cuba/menu_editor/web-menu.xml"/>
+        <property name="cuba.permissionConfig" value="+ru/itsyn/cuba/menu_editor/web-permissions.xml"/>
+        <property name="cuba.mainMessagePack" value="+ru.itsyn.cuba.menu_editor.web"/>
+    </module>
+</app-component>
