@@ -28,6 +28,7 @@ import ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemLoader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.HashSet;
 import java.util.List;
 
 import static com.haulmont.cuba.gui.model.CollectionChangeType.ADD_ITEMS;
@@ -202,6 +203,11 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
         var rootItem = getRootItem();
         if (rootItem == null) return;
         updateMenuConfig(rootItem);
+        // optimization
+        new HashSet<>(dataContext.getModified()).forEach(e -> {
+            if (e instanceof MenuItemEntity)
+                dataContext.evict(e);
+        });
     }
 
     void updateMenuConfig(MenuItemEntity rootItem) {
