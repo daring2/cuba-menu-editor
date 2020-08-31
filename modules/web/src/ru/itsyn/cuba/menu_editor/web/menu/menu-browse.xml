@@ -19,7 +19,7 @@
                 <action id="edit" type="edit"/>
                 <action id="copy" caption="msg://copy" icon="icons/copy.png" trackSelection="true"/>
                 <action id="remove" type="remove"/>
-                <action id="apply" caption="Apply"/>
+                <action id="apply" caption="msg://apply"/>
             </actions>
             <columns>
                 <column id="name"/>
