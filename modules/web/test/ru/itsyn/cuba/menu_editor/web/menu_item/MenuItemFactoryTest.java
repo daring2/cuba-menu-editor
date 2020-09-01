@@ -77,7 +77,7 @@ public class MenuItemFactoryTest {
         var ci = new MenuItem(mi, "ci1");
         ci.setMenu(false);
         ci.setSeparator(true);
-        assertMenuItem(mi, MenuItemType.SEPARATOR);
+        assertMenuItem(ci, MenuItemType.SEPARATOR);
     }
 
     void assertMenuItem(MenuItem mi, MenuItemType itemType) {
