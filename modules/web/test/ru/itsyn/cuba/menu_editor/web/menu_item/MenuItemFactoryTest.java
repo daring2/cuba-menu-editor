@@ -68,10 +68,11 @@ public class MenuItemFactoryTest {
         de.addAttribute("openType", "NEW_TAB");
         de.addAttribute("resizable", "true");
         de.addAttribute("shortcut", "shortcut1");
-        de.addElement("param").addAttribute("name", "p1");
-        de.addElement("param").addAttribute("name", "p2");
         mi.setDescriptor(de);
         assertMenuItem(mi, MenuItemType.SCREEN);
+
+        de.addElement("param").addAttribute("name", "p1");
+        de.addElement("param").addAttribute("name", "p2");
 
         mi.setMenu(false);
         mi.setSeparator(true);
@@ -107,15 +108,20 @@ public class MenuItemFactoryTest {
             assertEquals("bean1", item.getBean());
             assertEquals("beanMethod1", item.getBeanMethod());
             assertNull(item.getExpanded());
-            if (mi.getDescriptor() != null) {
+            var d = mi.getDescriptor();
+            if (d != null) {
                 assertEquals(MenuOpenType.NEW_TAB, item.getOpenType());
                 assertEquals(true, item.getResizable());
                 assertEquals("shortcut1", item.getShortcut());
-                assertEquals("<param name=\"p1\"/>\n<param name=\"p2\"/>", item.getContentXml());
             } else {
                 assertNull(item.getOpenType());
                 assertNull(item.getResizable());
                 assertNull(item.getShortcut());
+            }
+            if (d != null && !d.content().isEmpty()) {
+                assertEquals("<param name=\"p1\"/><param name=\"p2\"/>", item.getContentXml());
+            } else {
+                assertNull(item.getContentXml());
             }
         }
 

@@ -1,9 +1,7 @@
 package ru.itsyn.cuba.menu_editor.web.menu_item;
 
 import com.haulmont.chile.core.datatypes.impl.EnumClass;
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
+import org.dom4j.*;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.itsyn.cuba.menu_editor.entity.MenuItemEntity;
@@ -13,6 +11,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import java.util.List;
 
 import static org.apache.commons.lang3.BooleanUtils.isTrue;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Component("menu_MenuConfigBuilder")
@@ -52,7 +51,7 @@ public class MenuConfigBuilder {
             if (isTrue(item.getResizable()))
                 addAttributeValue(e, "resizable", item.getResizable());
             addAttributeValue(e, "shortcut", item.getShortcut());
-            //TODO add attributes params, permissions, screenProperties
+            addContentXml(e, item.getContentXml());
         }
     }
 
@@ -71,6 +70,19 @@ public class MenuConfigBuilder {
         if (value instanceof EnumClass<?>)
             value = ((EnumClass<?>) value).getId();
         e.addAttribute(name, value.toString());
+    }
+
+    void addContentXml(Element e, String xml) {
+        try {
+            if (isBlank(xml)) return;
+            var doc = DocumentHelper.parseText("<root>" + xml + "</root>");
+            for (Node n : doc.getRootElement().content()) {
+                n.setParent(null);
+                e.add(n);
+            }
+        } catch (DocumentException ex) {
+            throw new RuntimeException("Cannot parse contentXml", ex);
+        }
     }
 
 }
