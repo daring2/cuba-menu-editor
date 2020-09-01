@@ -56,18 +56,19 @@ public class MenuItemFactoryTest {
         mi.setBean("bean1");
         mi.setBeanMethod("beanMethod1");
 
-        var de = DocumentHelper.createDocument().addElement("d");
-        de.addAttribute("openType", "NEW_TAB");
-        de.addAttribute("resizable", "true");
-        de.addAttribute("shortcut", "shortcut1");
-        mi.setDescriptor(de);
-
         mi.setMenu(true);
         mi.setSeparator(false);
         assertMenuItem(mi, MenuItemType.MENU);
 
         mi.setMenu(false);
         mi.setSeparator(false);
+        assertMenuItem(mi, MenuItemType.SCREEN);
+
+        var de = DocumentHelper.createDocument().addElement("d");
+        de.addAttribute("openType", "NEW_TAB");
+        de.addAttribute("resizable", "true");
+        de.addAttribute("shortcut", "shortcut1");
+        mi.setDescriptor(de);
         assertMenuItem(mi, MenuItemType.SCREEN);
 
         mi.setMenu(false);
@@ -103,10 +104,16 @@ public class MenuItemFactoryTest {
             assertEquals("runnableClass", item.getRunnableClass());
             assertEquals("bean1", item.getBean());
             assertEquals("beanMethod1", item.getBeanMethod());
-            assertEquals(MenuOpenType.NEW_TAB, item.getOpenType());
-            assertEquals(true, item.getResizable());
-            assertEquals("shortcut1", item.getShortcut());
             assertNull(item.getExpanded());
+            if (mi.getDescriptor() != null) {
+                assertEquals(MenuOpenType.NEW_TAB, item.getOpenType());
+                assertEquals(true, item.getResizable());
+                assertEquals("shortcut1", item.getShortcut());
+            } else {
+                assertNull(item.getOpenType());
+                assertNull(item.getResizable());
+                assertNull(item.getShortcut());
+            }
         }
 
     }
