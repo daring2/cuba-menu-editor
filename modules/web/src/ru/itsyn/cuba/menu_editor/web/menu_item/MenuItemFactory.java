@@ -2,8 +2,8 @@ package ru.itsyn.cuba.menu_editor.web.menu_item;
 
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.gui.config.MenuItem;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
-import org.dom4j.Node;
 import org.springframework.stereotype.Component;
 import ru.itsyn.cuba.menu_editor.entity.MenuItemEntity;
 import ru.itsyn.cuba.menu_editor.entity.MenuItemType;
@@ -72,7 +72,8 @@ public class MenuItemFactory {
 
     String buildContentXml(Element d) {
         return d.content().stream()
-                .map(Node::asXML)
+                .map(n -> n.asXML().trim())
+                .filter(StringUtils::isNotBlank)
                 .collect(Collectors.joining("\n"));
     }
 

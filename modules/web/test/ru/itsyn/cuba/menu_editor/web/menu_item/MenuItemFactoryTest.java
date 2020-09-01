@@ -69,6 +69,7 @@ public class MenuItemFactoryTest {
         de.addAttribute("resizable", "true");
         de.addAttribute("shortcut", "shortcut1");
         de.addElement("param").addAttribute("name", "p1");
+        de.addElement("param").addAttribute("name", "p2");
         mi.setDescriptor(de);
         assertMenuItem(mi, MenuItemType.SCREEN);
 
@@ -110,7 +111,7 @@ public class MenuItemFactoryTest {
                 assertEquals(MenuOpenType.NEW_TAB, item.getOpenType());
                 assertEquals(true, item.getResizable());
                 assertEquals("shortcut1", item.getShortcut());
-                assertEquals("<param name=\"p1\"/>", item.getContentXml());
+                assertEquals("<param name=\"p1\"/>\n<param name=\"p2\"/>", item.getContentXml());
             } else {
                 assertNull(item.getOpenType());
                 assertNull(item.getResizable());
