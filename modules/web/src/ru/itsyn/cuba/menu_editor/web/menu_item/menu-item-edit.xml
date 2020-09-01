@@ -6,8 +6,8 @@
             <loader/>
         </instance>
     </data>
-    <dialogMode height="420" width="800" resizable="true"/>
-    <layout expand="editActions" spacing="true">
+    <dialogMode height="550" width="800" resizable="true"/>
+    <layout expand="contentField" spacing="true">
         <form id="form" dataContainer="editDc" width="100%">
             <column width="100%">
                 <textField id="idField" property="id"/>
@@ -30,6 +30,9 @@
                 <textField id="iconField" property="icon"/>
             </column>
         </form>
+        <sourceCodeEditor id="contentField" dataContainer="editDc" property="contentXml" width="100%"
+                          mode="XML" highlightActiveLine="false" showGutter="false"
+                          caption="msg://ru.itsyn.cuba.menu_editor.entity/MenuItemEntity.contentXml"/>
         <hbox id="editActions" spacing="true" align="TOP_CENTER">
             <button action="windowCommitAndClose"/>
             <button action="windowClose"/>

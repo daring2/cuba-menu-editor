@@ -2,12 +2,15 @@ package ru.itsyn.cuba.menu_editor.web.menu_item;
 
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.gui.config.MenuItem;
+import org.dom4j.Element;
+import org.dom4j.Node;
 import org.springframework.stereotype.Component;
 import ru.itsyn.cuba.menu_editor.entity.MenuItemEntity;
 import ru.itsyn.cuba.menu_editor.entity.MenuItemType;
 import ru.itsyn.cuba.menu_editor.entity.MenuOpenType;
 
 import javax.inject.Inject;
+import java.util.stream.Collectors;
 
 import static com.haulmont.cuba.core.global.UuidProvider.createUuid;
 import static java.lang.Boolean.parseBoolean;
@@ -54,6 +57,7 @@ public class MenuItemFactory {
                 e.setOpenType(MenuOpenType.fromId(d.attributeValue("openType")));
                 e.setResizable(parseBoolean(d.attributeValue("resizable")));
                 e.setShortcut(d.attributeValue("shortcut"));
+                e.setContentXml(buildContentXml(d));
             }
         }
         return e;
@@ -64,6 +68,12 @@ public class MenuItemFactory {
         if (parent == null)
             return createUuid().toString();
         return "separator-" + parent.getChildren().indexOf(item);
+    }
+
+    String buildContentXml(Element d) {
+        return d.content().stream()
+                .map(Node::asXML)
+                .collect(Collectors.joining("\n"));
     }
 
 }

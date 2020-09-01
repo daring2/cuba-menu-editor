@@ -70,7 +70,16 @@ public class MenuItemEntity extends BaseStringIdEntity {
     @MetaProperty
     protected List<MenuItemEntity> children = new ArrayList<>();
 
-    //TODO add attributes params, permissions, screenProperties
+    @MetaProperty
+    protected String contentXml;
+
+    public String getContentXml() {
+        return contentXml;
+    }
+
+    public void setContentXml(String contentXml) {
+        this.contentXml = contentXml;
+    }
 
     public String getCaptionKey() {
         return captionKey;
