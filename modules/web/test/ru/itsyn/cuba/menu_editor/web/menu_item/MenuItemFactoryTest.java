@@ -2,6 +2,7 @@ package ru.itsyn.cuba.menu_editor.web.menu_item;
 
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.gui.config.MenuItem;
+import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.junit.Before;
 import org.junit.Test;
@@ -124,7 +125,19 @@ public class MenuItemFactoryTest {
                 assertNull(item.getContentXml());
             }
         }
+    }
 
+    @Test
+    public void testBuildContentXml() throws Exception{
+        checkContextXml("<root/>", null);
+        checkContextXml("<root><p1/><p2/></root>", "<p1/><p2/>");
+        checkContextXml("<root>\n  <p1/>  \n\n  <p2/>\n</root>", "<p1/>\n<p2/>");
+    }
+
+    void checkContextXml(String docXml, String result) throws DocumentException {
+        var doc = DocumentHelper.parseText(docXml);
+        var content = factory.buildContentXml(doc.getRootElement());
+        assertEquals(result, content);
     }
 
 }
