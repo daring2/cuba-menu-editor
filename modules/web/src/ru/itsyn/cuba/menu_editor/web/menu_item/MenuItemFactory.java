@@ -2,6 +2,7 @@ package ru.itsyn.cuba.menu_editor.web.menu_item;
 
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.gui.config.MenuItem;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 import org.springframework.stereotype.Component;
 import ru.itsyn.cuba.menu_editor.entity.MenuItemEntity;
@@ -9,6 +10,7 @@ import ru.itsyn.cuba.menu_editor.entity.MenuItemType;
 import ru.itsyn.cuba.menu_editor.entity.MenuOpenType;
 
 import javax.inject.Inject;
+import java.util.stream.Collectors;
 
 import static com.haulmont.cuba.core.global.UuidProvider.createUuid;
 import static java.lang.Boolean.parseBoolean;
@@ -76,7 +78,9 @@ public class MenuItemFactory {
         var xml = d.asXML();
         xml = substringAfter(xml, ">");
         xml = substringBeforeLast(xml, "<");
-        return xml.trim();
+        return xml.lines().map(String::trim)
+                .filter(StringUtils::isNotBlank)
+                .collect(Collectors.joining("\n"));
     }
 
 }

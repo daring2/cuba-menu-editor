@@ -19,10 +19,11 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @NotThreadSafe
 public class MenuConfigBuilder {
 
+    static final String MENU_NAMESPACE = "http://schemas.haulmont.com/cuba/menu.xsd";
+
     public Document buildMenuConfig(List<MenuItemEntity> items) {
         var doc = DocumentHelper.createDocument();
-        var rootElement = doc.addElement("menu-config",
-                "http://schemas.haulmont.com/cuba/menu.xsd");
+        var rootElement = doc.addElement("menu-config", MENU_NAMESPACE);
         items.forEach(i -> addMenuItem(rootElement, i));
         return doc;
     }
@@ -75,7 +76,11 @@ public class MenuConfigBuilder {
     void addContentXml(Element e, String xml) {
         try {
             if (isBlank(xml)) return;
-            var doc = DocumentHelper.parseText("<root>" + xml + "</root>");
+            var docXml = String.format(
+                    "<root xmlns=\"%s\">%s</root>",
+                    MENU_NAMESPACE, xml
+            );
+            var doc = DocumentHelper.parseText(docXml);
             for (Node n : doc.getRootElement().content()) {
                 n.setParent(null);
                 e.add(n);
