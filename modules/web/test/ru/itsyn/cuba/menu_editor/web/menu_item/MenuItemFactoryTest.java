@@ -5,7 +5,6 @@ import com.haulmont.cuba.gui.config.MenuItem;
 import org.dom4j.DocumentHelper;
 import org.junit.Before;
 import org.junit.Test;
-import ru.itsyn.cuba.menu_editor.entity.MenuItemEntity;
 import ru.itsyn.cuba.menu_editor.entity.MenuItemType;
 import ru.itsyn.cuba.menu_editor.entity.MenuOpenType;
 
@@ -65,21 +64,24 @@ public class MenuItemFactoryTest {
 
         mi.setMenu(true);
         mi.setSeparator(false);
-        var i1 = f.createItem(mi);
-        assertMenuItem(i1, MenuItemType.MENU);
-
-        mi.setMenu(false);
-        mi.setSeparator(true);
-        var i2 = f.createItem(mi);
-        assertMenuItem(i2, MenuItemType.SEPARATOR);
+        assertMenuItem(mi, MenuItemType.MENU);
 
         mi.setMenu(false);
         mi.setSeparator(false);
-        var i3 = f.createItem(mi);
-        assertMenuItem(i3, MenuItemType.SCREEN);
+        assertMenuItem(mi, MenuItemType.SCREEN);
+
+        mi.setMenu(false);
+        mi.setSeparator(true);
+        assertMenuItem(mi, MenuItemType.SEPARATOR);
+
+        var ci = new MenuItem(mi, "ci1");
+        ci.setMenu(false);
+        ci.setSeparator(true);
+        assertMenuItem(mi, MenuItemType.SEPARATOR);
     }
 
-    void assertMenuItem(MenuItemEntity item, MenuItemType itemType) {
+    void assertMenuItem(MenuItem mi, MenuItemType itemType) {
+        var item = factory.createItem(mi);
         assertEquals(itemType, item.getItemType());
         if (itemType != MenuItemType.SEPARATOR) {
             assertEquals("caption1", item.getCaptionKey());
@@ -93,6 +95,9 @@ public class MenuItemFactoryTest {
         } else if (itemType == MenuItemType.SEPARATOR) {
             assertEquals("separator caption", item.getCaptionKey());
             assertNull(item.getScreen());
+            if (item.getParent() != null) {
+                assertEquals("separator-0", item.getId());
+            }
         } if (itemType == MenuItemType.SCREEN) {
             assertEquals("screen1", item.getScreen());
             assertEquals("runnableClass", item.getRunnableClass());
