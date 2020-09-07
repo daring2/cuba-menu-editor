@@ -89,7 +89,7 @@ public class MenuEditor extends StandardEditor<MenuEntity> {
         if (item == null || getRootItem().equals(item))
             return;
         var targetItem = event.getDropTargetRow().orElse(null);
-        if (targetItem == null)
+        if (targetItem == null || targetItem.getParent() == null)
             return;
         var dropLoc = event.getDropLocation();
         if (dropLoc == DropLocation.ON_TOP && targetItem.isMenu()) {
