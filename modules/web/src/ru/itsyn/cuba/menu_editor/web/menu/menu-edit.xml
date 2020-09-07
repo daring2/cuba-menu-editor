@@ -9,6 +9,11 @@
         <collection id="itemsDc" class="ru.itsyn.cuba.menu_editor.entity.MenuItemEntity">
             <loader id="itemsDl"/>
         </collection>
+        <collection id="rolesDc" class="com.haulmont.cuba.security.entity.Role">
+            <loader id="rolesDl">
+                <query>select e from sec$Role e order by e.name</query>
+            </loader>
+        </collection>
     </data>
     <dialogMode height="768" width="1024"/>
     <layout expand="split" spacing="true">
@@ -17,7 +22,7 @@
                 <form id="form" dataContainer="editDc" width="100%">
                     <column width="100%">
                         <textField id="nameField" property="name"/>
-                        <pickerField id="roleField" property="role"/>
+                        <lookupField id="roleField" property="role" optionsContainer="rolesDc"/>
                         <textArea id="descriptionField" property="description" rows="3" colspan="2"/>
                     </column>
                     <column width="100%">
