@@ -49,7 +49,7 @@ public class MenuConfigBuilder {
             addAttributeValue(e, "bean", item.getBean());
             addAttributeValue(e, "beanMethod", item.getBeanMethod());
             addAttributeValue(e, "openType", item.getOpenType());
-            if (isTrue(item.getResizable()))
+            if (item.getResizable() != null)
                 addAttributeValue(e, "resizable", item.getResizable());
             addAttributeValue(e, "shortcut", item.getShortcut());
             addContentXml(e, item.getContentXml());

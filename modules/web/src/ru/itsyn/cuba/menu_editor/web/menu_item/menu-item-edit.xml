@@ -16,7 +16,7 @@
                 <textField id="descriptionField" property="description"/>
                 <textField id="screenField" property="screen"/>
                 <textField id="beanField" property="bean"/>
-                <checkBox id="resizableField" property="resizable"/>
+                <lookupField id="resizableField" property="resizable"/>
                 <textField id="styleNameField" property="styleName"/>
             </column>
             <column width="100%">

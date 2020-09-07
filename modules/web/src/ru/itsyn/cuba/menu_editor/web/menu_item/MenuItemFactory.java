@@ -13,7 +13,6 @@ import javax.inject.Inject;
 import java.util.stream.Collectors;
 
 import static com.haulmont.cuba.core.global.UuidProvider.createUuid;
-import static java.lang.Boolean.parseBoolean;
 import static org.apache.commons.lang3.StringUtils.substringAfter;
 import static org.apache.commons.lang3.StringUtils.substringBeforeLast;
 
@@ -81,6 +80,12 @@ public class MenuItemFactory {
         return xml.lines().map(String::trim)
                 .filter(StringUtils::isNotBlank)
                 .collect(Collectors.joining("\n"));
+    }
+
+    Boolean parseBoolean(String value) {
+        if (value == null)
+            return null;
+        return Boolean.valueOf(value);
     }
 
 }
