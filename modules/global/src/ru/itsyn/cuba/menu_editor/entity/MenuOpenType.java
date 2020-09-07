@@ -6,9 +6,9 @@ import javax.annotation.Nullable;
 
 public enum MenuOpenType implements EnumClass<String> {
 
+    THIS_TAB("THIS_TAB"),
     NEW_TAB("NEW_TAB"),
-    DIALOG("DIALOG"),
-    NEW_WINDOW("NEW_WINDOW");
+    DIALOG("DIALOG");
 
     private String id;
 
