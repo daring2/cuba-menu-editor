@@ -42,7 +42,8 @@
                 </hbox>
             </vbox>
             <vbox expand="itemsTable" height="100%" width="100%" margin="true" spacing="true">
-                <treeDataGrid id="itemsTable" dataContainer="itemsDc" hierarchyProperty="parent" width="100%">
+                <treeDataGrid id="itemsTable" dataContainer="itemsDc" hierarchyProperty="parent" width="100%"
+                              sortable="false">
                     <actions>
                         <action id="create" type="create"/>
                         <action id="edit" type="edit"/>
