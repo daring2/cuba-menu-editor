@@ -4,13 +4,13 @@ import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.gui.config.MenuItem;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import ru.itsyn.cuba.menu_editor.entity.MenuItemType;
 import ru.itsyn.cuba.menu_editor.entity.MenuOpenType;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -21,7 +21,7 @@ public class MenuItemFactoryTest {
 
     MenuItemFactory factory;
 
-    @Before
+    @BeforeEach
     public void init() {
         factory = new MenuItemFactory();
         factory.messages = mock(Messages.class);

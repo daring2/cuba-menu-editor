@@ -1,11 +1,11 @@
 package ru.itsyn.cuba.menu_editor.entity;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MenuItemEntityTest {
 
