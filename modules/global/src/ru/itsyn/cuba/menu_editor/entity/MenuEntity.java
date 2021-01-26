@@ -15,8 +15,6 @@ import javax.validation.constraints.NotNull;
 public class MenuEntity extends StandardEntity {
     private static final long serialVersionUID = 8060389614924374355L;
 
-    public static final String DEFAULT_CODE = "default";
-
     @NotNull
     @Column(name = "NAME", nullable = false, unique = true)
     protected String name;
