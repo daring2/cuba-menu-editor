@@ -8,11 +8,11 @@ buildscript {
     }
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
     }
 }
 
 plugins {
+    id "maven-publish"
     id "jacoco"
     id "org.sonarqube" version "3.0"
 }
@@ -55,6 +55,7 @@ sonarqube {
 configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'java')
     apply(plugin: 'maven')
+    apply(plugin: 'maven-publish')
     apply(plugin: 'cuba')
     apply(plugin: 'jacoco')
     apply(plugin: 'org.sonarqube')
@@ -83,6 +84,23 @@ configure([globalModule, coreModule, webModule]) {
     jacocoTestReport {
         dependsOn test
         reports.xml.enabled = true
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+                artifact sourceJar
+            }
+        }
+        repositories.maven {
+            url = "https://gitlab.com/api/v4/projects/24906229/packages/maven"
+            credentials(HttpHeaderCredentials) {
+                name = 'Private-Token'
+                value = findProperty("its.gitlabToken")
+            }
+            authentication {header(HttpHeaderAuthentication) }
+        }
     }
 }
 
@@ -120,6 +138,12 @@ configure(coreModule) {
         compileOnly(servletApi)
         jdbc(hsql)
         testRuntime(hsql)
+    }
+
+    publishing.publications {
+        maven(MavenPublication) {
+            artifact dbScriptsArchive
+        }
     }
 
     task cleanConf(description: 'Cleans up conf directory', type: Delete) {
@@ -168,6 +192,12 @@ configure(webModule) {
         archives webArchive
     }
 
+    publishing.publications {
+        maven(MavenPublication) {
+            artifact webArchive
+        }
+    }
+
     task deployConf(type: Copy) {
         from file('src')
         include "ru/itsyn/cuba/menu_editor/**"
@@ -206,20 +236,3 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
 }
 
 restart.finalizedBy start
-
-subprojects {
-    apply plugin: 'com.jfrog.bintray'
-    bintray {
-        user = 'its-admin'
-        key = findProperty("its.bintrayKey")
-        configurations = ['archives']
-        publish = true
-        pkg {
-            repo = 'it-syn'
-            name = 'cuba-menu-editor'
-            licenses = ['Apache-2.0']
-            vcsUrl = 'https://gitlab.com/it-syn/its-common'
-            version.name = project.version
-        }
-    }
-}
