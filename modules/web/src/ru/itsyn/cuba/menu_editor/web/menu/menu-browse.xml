@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd" caption="msg://browseCaption" focusComponent="table"
-        messagesPack="ru.itsyn.cuba.menu_editor.web.menu">
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        messagesPack="ru.itsyn.cuba.menu_editor.web.menu"
+        caption="msg://browseCaption" focusComponent="table">
     <data readOnly="true">
         <collection id="tableDc" class="ru.itsyn.cuba.menu_editor.entity.MenuEntity" view="full">
             <loader id="tableDl">

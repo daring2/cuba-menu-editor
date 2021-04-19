@@ -64,8 +64,8 @@ configure([globalModule, coreModule, webModule]) {
     targetCompatibility = JavaVersion.VERSION_11
 
     dependencies {
-        testCompile('org.junit.jupiter:junit-jupiter-engine:5.7.0')
-        testCompile('org.mockito:mockito-core:3.6.28')
+        testCompile('org.junit.jupiter:junit-jupiter-engine:5.7.1')
+        testCompile('org.mockito:mockito-core:3.8.0')
     }
 
     test {
@@ -99,7 +99,7 @@ configure([globalModule, coreModule, webModule]) {
                 name = 'Private-Token'
                 value = findProperty("its.gitlabToken")
             }
-            authentication {header(HttpHeaderAuthentication) }
+            authentication { header(HttpHeaderAuthentication) }
         }
     }
 }
