@@ -8,11 +8,11 @@ The add-on provides support of multiple main menus in CUBA applications. Menus a
 and edited at runtime in administration screens.
 
 ## Installation
-1. Add the following maven repository `'https://dl.bintray.com/its-admin/it-syn'` to build.gradle.
+1. Add the following maven repository `'https://gitlab.com/api/v4/projects/24906229/packages/maven'` to build.gradle.
 2. Install the add-on using the following coordinates `'ru.itsyn.cuba.menu_editor:menu-editor-global:<add-on version>'` 
    according [the platform documentation](https://doc.cuba-platform.com/manual-7.2/app_components_usage.html).
    
-The latest version is: [ ![Download](https://api.bintray.com/packages/its-admin/it-syn/cuba-menu-editor/images/download.svg)](https://bintray.com/its-admin/it-syn/cuba-menu-editor/_latestVersion)
+The latest version is: [0.7](https://gitlab.com/daring/it-syn-packages/-/packages/1544178)
 
 ## Usage
 Menus can be created and edited in "Main menus" screen in Administration menu. Menu attributes (name, description, etc) and items can be changed in "Menu editor" screen. Items can be reordered
