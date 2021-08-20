@@ -5,6 +5,7 @@ import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.RemoveOperation;
 import com.haulmont.cuba.gui.RemoveOperation.AfterActionPerformedEvent;
+import com.haulmont.cuba.gui.Route;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.actions.list.RemoveAction;
 import com.haulmont.cuba.gui.components.Action.ActionPerformedEvent;
@@ -37,6 +38,7 @@ import static ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemFactory.ROOT_ITEM_
 import static ru.itsyn.cuba.menu_editor.web.menu_item.MenuItemUtils.buildItemList;
 import static ru.itsyn.cuba.menu_editor.web.util.DialogUtils.newConfirmationDialog;
 
+@Route(path = "MenuEntity/edit", parentPrefix = "MenuEntity")
 @UiController("menu_MenuEntity.edit")
 @UiDescriptor("menu-edit.xml")
 @EditedEntityContainer("editDc")

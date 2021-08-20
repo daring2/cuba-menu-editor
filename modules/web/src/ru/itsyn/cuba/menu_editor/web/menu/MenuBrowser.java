@@ -2,6 +2,7 @@ package ru.itsyn.cuba.menu_editor.web.menu;
 
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.core.global.UuidProvider;
+import com.haulmont.cuba.gui.Route;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.components.Action.ActionPerformedEvent;
 import com.haulmont.cuba.gui.components.Table;
@@ -10,6 +11,7 @@ import ru.itsyn.cuba.menu_editor.entity.MenuEntity;
 
 import javax.inject.Inject;
 
+@Route("MenuEntity")
 @UiController("menu_MenuEntity.browse")
 @UiDescriptor("menu-browse.xml")
 @LookupComponent("table")
